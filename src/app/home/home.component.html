@@ -1,0 +1,54 @@
+<div class="card-container">
+  <mat-card>
+    <mat-card-header>
+      <h4>Upload the graph nodes</h4>
+    </mat-card-header>
+    <mat-card-content>
+      <button type="button" class="btn btn-primary" (click)="exportExcel()">
+        Export
+      </button>
+      <input
+        type="file"
+        accept=".xlsx"
+        class="custom-file-input"
+        id="customFile"
+        name="myfile"
+        (change)="onFileSelect($event)"
+        #UploadFileInput
+      />
+      <div class="nodesToRemove">
+        <h4>Nodes To Remove(Comma seperated)</h4>
+        <input [disabled]="!graphJSON.length" #nodesToRemove/>
+        <button [disabled]="!graphJSON.length" type="button" class="btn btn-primary" (click)="removeNodes()">
+          Remove
+        </button>
+      </div>
+
+      <div class="nodeList">
+        
+        <h4>Node List</h4>
+        <ul>
+          <li *ngFor="let node of graphJSON">
+              Node ID: {{node.nodeID}} - Connections: {{node.connections}}
+          </li>
+      </ul>
+      </div>
+      <button [disabled]="!graphJSON.length" type="button" class="calculate-btn btn btn-primary" (click)="initiatePrep()">
+        Calculate Fault Diameter
+      </button>
+      <div style="margin-top: 30px;" *ngIf="faultDiameter">
+        
+        <h4>Fault Diameter  - {{faultDiameter.length}} (First path - {{faultDiameter}})</h4>
+      </div>
+      <div class="nodeList" style="margin-top: 10px;" *ngIf="shortestPaths.length >0">
+        
+        <h4>Shortest Paths</h4>
+        <ul>
+          <li *ngFor="let paths of shortestPaths">
+              {{paths}}
+          </li>
+      </ul>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
